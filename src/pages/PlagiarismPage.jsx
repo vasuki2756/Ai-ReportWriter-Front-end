@@ -1,40 +1,42 @@
 import React, { useState } from 'react';
 import { FiFileText, FiUpload, FiCheckCircle, FiAlertCircle, FiBarChart2, FiRefreshCw } from 'react-icons/fi';
+import { apiService } from '../services/api';
 
-const PlagiarismChecker = () => {
+const PlagiarismPage = () => {
   const [document, setDocument] = useState('');
   const [isChecking, setIsChecking] = useState(false);
   const [results, setResults] = useState(null);
   const [progress, setProgress] = useState(0);
 
-  const handleCheckPlagiarism = () => {
+  const handleCheckPlagiarism = async () => {
     if (!document.trim()) return;
     
     setIsChecking(true);
     setProgress(0);
     
-    // Placeholder for AI plagiarism checking
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsChecking(false);
-          setResults({
-            overallScore: 12,
-            sources: [
-              { id: 1, title: "Similar Research Paper", url: "https://example.com/paper1", similarity: 8 },
-              { id: 2, title: "Academic Journal Article", url: "https://example.com/paper2", similarity: 4 },
-            ],
-            suggestions: [
-              "Consider rephrasing the highlighted sentences in the introduction section",
-              "Add proper citations for the statistical methods described in section 3.2"
-            ]
-          });
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 300);
+    try {
+      // Simulate progress
+      const progressInterval = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return 90;
+          }
+          return prev + 10;
+        });
+      }, 300);
+
+      const result = await apiService.checkPlagiarism(document);
+      
+      clearInterval(progressInterval);
+      setProgress(100);
+      setResults(result);
+    } catch (error) {
+      console.error('Error checking plagiarism:', error);
+      alert('Error checking plagiarism: ' + error.message);
+    } finally {
+      setIsChecking(false);
+    }
   };
 
   return (
@@ -62,7 +64,7 @@ const PlagiarismChecker = () => {
           )}
         </button>
       </div>
-
+      
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750">
@@ -93,7 +95,7 @@ const PlagiarismChecker = () => {
             </div>
           </div>
         </div>
-
+        
         <div className="space-y-6">
           {isChecking ? (
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
@@ -104,7 +106,7 @@ const PlagiarismChecker = () => {
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                   <div 
-                    className="bg-indigo-600 h-2.5 rounded-full" 
+                    className="bg-indigo-600 h-2.5 rounded-full animate-progress" 
                     style={{ width: `${progress}%` }}
                   ></div>
                 </div>
@@ -142,7 +144,7 @@ const PlagiarismChecker = () => {
                   )}
                 </div>
               </div>
-
+              
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
                 <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750">
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white">Similarity Sources</h3>
@@ -165,7 +167,7 @@ const PlagiarismChecker = () => {
                   ))}
                 </div>
               </div>
-
+              
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
                 <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750">
                   <h3 className="text-lg font-medium text-gray-900 dark:text-white">Improvement Suggestions</h3>
@@ -199,4 +201,4 @@ const PlagiarismChecker = () => {
   );
 };
 
-export default PlagiarismChecker;
+export default PlagiarismPage;

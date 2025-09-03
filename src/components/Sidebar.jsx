@@ -20,7 +20,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     { path: '/collaboration', icon: FiUsers, label: 'Collaboration' },
     { path: '/settings', icon: FiSettings, label: 'Settings' },
   ];
-
+  
   return (
     <>
       {/* Mobile backdrop */}

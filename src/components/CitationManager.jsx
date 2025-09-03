@@ -1,27 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiSearch, FiPlus, FiExternalLink, FiEdit2, FiTrash2, FiCheck, FiX } from 'react-icons/fi';
+import { apiService } from '../services/api';
 
-const CitationManager = () => {
-  const [citations, setCitations] = useState([
-    { id: 1, authors: "Smith, J. et al.", title: "Advanced Research Methods", year: 2022, journal: "Journal of AI Research", doi: "10.1234/jar.2022.12345", verified: true },
-    { id: 2, authors: "Johnson, M. et al.", title: "Data Analysis Techniques", year: 2021, journal: "Science Today", doi: "10.5678/st.2021.67890", verified: false },
-  ]);
-  
+const CitationManager = ({ citations, setCitations }) => {
   const [newCitation, setNewCitation] = useState({ authors: '', title: '', year: '', journal: '', doi: '' });
   const [searchTerm, setSearchTerm] = useState('');
   const [isAdding, setIsAdding] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
-  const handleAddCitation = () => {
+  // Load citations from backend on component mount
+  useEffect(() => {
+    const loadCitations = async () => {
+      try {
+        const data = await apiService.getCitations();
+        setCitations(data);
+      } catch (error) {
+        console.error('Failed to load citations:', error);
+      }
+    };
+    
+    loadCitations();
+  }, [setCitations]);
+
+  const handleAddCitation = async () => {
     if (newCitation.authors && newCitation.title) {
-      setCitations([...citations, { ...newCitation, id: citations.length + 1, verified: false }]);
-      setNewCitation({ authors: '', title: '', year: '', journal: '', doi: '' });
-      setIsAdding(false);
+      try {
+        const addedCitation = await apiService.addCitation(newCitation);
+        setCitations([...citations, { ...addedCitation, id: citations.length + 1, verified: false }]);
+        setNewCitation({ authors: '', title: '', year: '', journal: '', doi: '' });
+        setIsAdding(false);
+      } catch (error) {
+        console.error('Failed to add citation:', error);
+        alert('Failed to add citation');
+      }
     }
   };
 
-  const handleDeleteCitation = (id) => {
-    setCitations(citations.filter(citation => citation.id !== id));
+  const handleDeleteCitation = async (id) => {
+    try {
+      await apiService.deleteCitation(id);
+      setCitations(citations.filter(citation => citation.id !== id));
+    } catch (error) {
+      console.error('Failed to delete citation:', error);
+      alert('Failed to delete citation');
+    }
   };
 
   const handleVerifyCitation = (id) => {
@@ -78,7 +100,7 @@ const CitationManager = () => {
           </button>
         </div>
       </div>
-
+      
       {isAdding && (
         <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">Add New Citation</h3>
@@ -150,7 +172,7 @@ const CitationManager = () => {
           </div>
         </div>
       )}
-
+      
       <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

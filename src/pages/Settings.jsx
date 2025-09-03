@@ -1,4 +1,3 @@
-// pages/Settings.jsx
 import React, { useState } from 'react';
 import { FiUser, FiMail, FiLock, FiGlobe, FiMoon, FiBell, FiSave } from 'react-icons/fi';
 
@@ -34,7 +33,7 @@ const Settings = () => {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Settings</h1>
         <p className="text-gray-600 dark:text-gray-400">Manage your account preferences and application settings</p>
       </div>
-
+      
       <div className="flex flex-col md:flex-row gap-6">
         <div className="w-full md:w-64">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -51,7 +50,7 @@ const Settings = () => {
             </nav>
           </div>
         </div>
-
+        
         <div className="flex-1">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             {activeTab === 'profile' && (
@@ -111,7 +110,7 @@ const Settings = () => {
                 </div>
               </div>
             )}
-
+            
             {activeTab === 'account' && (
               <div className="space-y-6">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">Account Security</h2>
@@ -155,7 +154,7 @@ const Settings = () => {
                 </div>
               </div>
             )}
-
+            
             {activeTab === 'preferences' && (
               <div className="space-y-6">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">Application Preferences</h2>
@@ -248,7 +247,7 @@ const Settings = () => {
                 </div>
               </div>
             )}
-
+            
             {activeTab === 'notifications' && (
               <div className="space-y-6">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">Notification Settings</h2>
@@ -329,7 +328,7 @@ const Settings = () => {
                 </div>
               </div>
             )}
-
+            
             <div className="flex justify-end pt-6 border-t border-gray-200 dark:border-gray-700 mt-6">
               <button
                 onClick={handleSave}

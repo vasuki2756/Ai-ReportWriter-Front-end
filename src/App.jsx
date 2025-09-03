@@ -1,11 +1,13 @@
+// src/App.jsx
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './pages/Dashboard';
 import PaperGenerator from './pages/PaperGenerator';
-import CitationManager from './components/CitationManager';
-import PlagiarismChecker from './pages/PlagiarismChecker';
+import CitationsPage from './pages/CitationsPage';
+
+import PlagiarismPage from "./pages/PlagiarismPage";
 import Collaboration from './pages/Collaboration';
 import Settings from './pages/Settings';
 import './App.css';
@@ -16,21 +18,30 @@ function App() {
 
   return (
     <Router>
-      <div className={`flex h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+      <div className={`app-container ${darkMode ? 'dark' : ''}`}>
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className="flex-1 flex flex-col overflow-hidden">
+        
+        {sidebarOpen && (
+          <div 
+            className="sidebar-backdrop open"
+            onClick={() => setSidebarOpen(false)}
+          ></div>
+        )}
+        
+        <div className="main-content">
           <Header 
             sidebarOpen={sidebarOpen} 
             setSidebarOpen={setSidebarOpen} 
             darkMode={darkMode} 
             setDarkMode={setDarkMode} 
           />
-          <main className="flex-1 overflow-y-auto p-4 md:p-6">
+          
+          <main className="content-area">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/generator" element={<PaperGenerator />} />
-              <Route path="/citations" element={<CitationManager />} />
-              <Route path="/plagiarism" element={<PlagiarismChecker />} />
+              <Route path="/citations" element={<CitationsPage />} />
+              <Route path="/plagiarism" element={<PlagiarismPage />} />
               <Route path="/collaboration" element={<Collaboration />} />
               <Route path="/settings" element={<Settings />} />
             </Routes>

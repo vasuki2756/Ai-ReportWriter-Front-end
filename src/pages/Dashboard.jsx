@@ -8,13 +8,13 @@ const Dashboard = () => {
     { name: 'Citations Managed', value: '48', change: '+12', icon: FiBook, color: 'bg-blue-500' },
     { name: 'Plagiarism Checks', value: '8', change: '+3', icon: FiBarChart2, color: 'bg-purple-500' },
   ];
-
+  
   const recentPapers = [
     { id: 1, title: 'Machine Learning Approaches for Climate Prediction', template: 'IEEE', status: 'completed', date: '2023-06-15' },
     { id: 2, title: 'Blockchain Applications in Healthcare', template: 'Springer', status: 'in-progress', date: '2023-06-10' },
     { id: 3, title: 'Quantum Computing Algorithms', template: 'ACM', status: 'draft', date: '2023-06-05' },
   ];
-
+  
   const recentActivity = [
     { id: 1, user: 'Alex Johnson', action: 'commented on', target: 'Machine Learning Approaches', time: '2 hours ago' },
     { id: 2, user: 'You', action: 'generated', target: 'Blockchain Applications', time: '5 hours ago' },
@@ -27,7 +27,7 @@ const Dashboard = () => {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
         <p className="text-gray-600 dark:text-gray-400">Welcome back! Here's what's happening with your research papers.</p>
       </div>
-
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
           <div key={stat.name} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-5">
@@ -46,7 +46,7 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
-
+      
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750 flex items-center justify-between">
@@ -88,7 +88,7 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
-
+        
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-750">
             <h2 className="text-lg font-medium text-gray-900 dark:text-white">Recent Activity</h2>
@@ -119,7 +119,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
+      
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between mb-4">
@@ -146,8 +146,7 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
-
-        {/* Enhanced Settings Section */}
+        
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-medium text-gray-900 dark:text-white">Application Settings</h2>
